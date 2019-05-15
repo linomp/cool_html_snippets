@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- bootstrap css cdn (optional)-->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+
+    <!-- tabulator css & js cdn (required at the top)-->
+    <link
+      href="https://unpkg.com/tabulator-tables@4.1.4/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/tabulator-tables@4.1.4/dist/js/tabulator.min.js"
+    ></script>
+
+    <title>Ajax table example</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <button id="download-csv" class="btn btn-primary mb-2 mt-2">
+        Download data as CSV
+      </button>
+      <table id="example-table" class="table"></table>
+    </div>
+
+    <script>
+      const table = new Tabulator("#example-table", {
+        ajaxURL: "https://jsonplaceholder.typicode.com/users/", //ajax URL
+        layout: "fitColumns",
+        columns: [
+          //set column definitions for imported table data
+          { title: "Name", field: "name", sorter: "string" },
+          { title: "Username", field: "username", sorter: "string" },
+          { title: "Email", field: "email", sorter: "string" }
+        ]
+      });
+
+      //trigger download of data.csv file
+      const downloadBtn = document.querySelector("#download-csv");
+      downloadBtn.addEventListener("click", () => {
+        table.download("csv", "data.csv");
+      });
+    </script>
+  </body>
+</html>
